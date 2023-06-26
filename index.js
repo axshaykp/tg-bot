@@ -8,9 +8,11 @@ dotenv.config();
 const token = process.env.API_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
 
+bot.sendMessage(process.env.ADMIN_ID,"Bot is now live!")
+
 bot.on("message", (msg) => {
     // console.log(msg);
-    if (msg.from.username === "axshaykp") {
+    if (msg.from.username === process.env.ADMIN_ID) {
         bot.onText(/\/start/, (msg) => {
             const chatId = msg.chat.id;
             const message = `Welcome ${msg.from.first_name} \n 
