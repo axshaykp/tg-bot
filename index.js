@@ -16,15 +16,15 @@ bot.on("message", (msg) => {
             const message = `Welcome ${msg.from.first_name} \n 
             /start => To Start \n 
             /e $command => To execute $command \n
-            /sendPhoto => To send a photo \n
+            /sendFile => To send a file \n
             /publicIp => To get public IP \n
             /ytAudio => download youtube audio as mp3`;
 
             bot.sendMessage(chatId, message);
         });
-        bot.onText(/\/sendPhoto/, (msg) => {
+        bot.onText(/\/sendFile/, (msg) => {
             const chatId = msg.chat.id;
-            const imagePathCommand = "ls ~/Downloads/walls/wallhaven-6dqemx.jpg";
+            const imagePathCommand = `ls ${msg.text.substring(10)}`;
 
             exec(imagePathCommand, (error, stdout, stderr) => {
                 if (error) {
@@ -35,7 +35,7 @@ bot.on("message", (msg) => {
                 const photoPath = stdout.trim();
 
                 // Send the photo as a reply
-                bot.sendPhoto(chatId, photoPath).catch((error) => {
+                bot.sendDocument(chatId, photoPath).catch((error) => {
                     console.error(`Error sending photo: ${error}`);
                 });
             });
